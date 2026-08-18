@@ -19,7 +19,7 @@ export const projects: Project[] = [
     description:
       "A modern storefront with a product catalog, cart state and a complete checkout flow.",
     image: "/images/projects/ecommerce.jpg",
-    demoUrl: "https://...", // TODO: paste your live demo URL
+    demoUrl: "https://ecommerce-store-eight-teal.vercel.app/", // TODO: paste your live demo URL
     githubUrl: "https://github.com/mahmoudshahieen4-ux", // TODO: paste the repository URL
     techStack: ["React", "TypeScript", "Tailwind"],
   },
@@ -28,8 +28,8 @@ export const projects: Project[] = [
     title: "Game Station",
     description:
       "A Steam-inspired game store with rich game cards, store pages and a searchable library.",
-    image: "/images/projects/gamestation.jpg",
-    demoUrl: "https://...", // TODO: paste your live demo URL
+    image: "/images/projects/gamestation.png",
+    demoUrl: "https://steam-games-psi.vercel.app/", // TODO: paste your live demo URL
     githubUrl: "https://github.com/mahmoudshahieen4-ux", // TODO: paste the repository URL
     techStack: ["React", "Tailwind"],
   },
@@ -39,7 +39,7 @@ export const projects: Project[] = [
     description:
       "A Udemy-style learning platform with course listings, player pages and Redux-powered state.",
     image: "/images/projects/udemy.jpg",
-    demoUrl: "https://...", // TODO: paste your live demo URL
+    demoUrl: "https://udemy-chi-eight.vercel.app/courses", // TODO: paste your live demo URL
     githubUrl: "https://github.com/mahmoudshahieen4-ux", // TODO: paste the repository URL
     techStack: ["React", "Redux", "Tailwind"],
   },
@@ -54,8 +54,8 @@ export const projects: Project[] = [
     techStack: ["React", "Tailwind"],
   },
   {
-    id: "personal-portfolio",
-    title: "Personal Portfolio",
+    id: "anime-landing-page",
+    title: "Personal ",
     description:
       "A hand-crafted portfolio built with vanilla JavaScript and CSS3 to showcase projects and skills.",
     image: "/images/projects/portfolio.jpg",
