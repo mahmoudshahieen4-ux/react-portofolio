@@ -170,6 +170,7 @@ export default function ThreeDSlider({
                       fill
                       sizes="(max-width: 767px) 55vw, (max-width: 1023px) 25vw, 20vw"
                       className={styles.media}
+                      quality={100}
                     />
                   </Link>
 
