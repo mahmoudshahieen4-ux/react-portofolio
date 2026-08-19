@@ -11,16 +11,6 @@ import type { Project } from "@/src/types/project";
  */
 export const projects: Project[] = [
   {
-    id: "next-portfolio",
-    title: "Next.js Portfolio",
-    description:
-      "This portfolio site — a modern Next.js app with an interactive 3D project carousel, smooth-scroll glassmorphism navigation and a working contact form.",
-    image: "/images/projects/portfolio.jpg",
-    demoUrl: "https://next-portofolio-lac-tau.vercel.app/",
-    githubUrl: "https://github.com/mahmoudshahieen4-ux",
-    techStack: ["Next.js", "TypeScript", "Tailwind"],
-  },
-  {
     id: "e-commerce-storefront",
     title: "E-Commerce Storefront",
     description:
