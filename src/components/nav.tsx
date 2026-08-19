@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -73,10 +74,20 @@ export default function Nav() {
       >
         <Link
           href="/"
-          className="text-lg font-black tracking-tight text-white"
+          className="flex flex-col items-center gap-1"
           aria-label="Go to homepage"
         >
-          Mahmoud<span className="text-violet-400">.dev</span>
+          <Image
+            src="/images/logo.png"
+            alt="Mahmoud Shahieen logo"
+            width={44}
+            height={44}
+            className="h-11 w-11 rounded-full object-cover"
+            priority
+          />
+          <span className="text-sm font-black tracking-tight text-white">
+            Mahmoud<span className="text-violet-400">.dev</span>
+          </span>
         </Link>
 
         {/* Desktop links */}
