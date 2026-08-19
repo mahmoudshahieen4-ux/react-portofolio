@@ -18,9 +18,9 @@ export interface PersonalInfo {
 }
 
 export const personalInfo: PersonalInfo = {
-  name: "Mahmoud Issa",
+  name: "Mahmoud Shahieen",
   role: "Front-End Developer",
-  headline: "Front-End Developer | AI & Machine Learning Student",
+  headline: "Front-End Developer ",
   location: "Cairo, Egypt",
   email: "mahmoudshahieen4@gmail.com",
   phone: "+20 100 785 2868",
