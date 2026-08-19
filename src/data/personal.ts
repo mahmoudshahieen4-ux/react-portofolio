@@ -13,6 +13,8 @@ export interface PersonalInfo {
   phone: string;
   linkedinUrl: string;
   githubUrl: string;
+  /** WhatsApp deep link (wa.me) used by the "Hire Me" / "Contact Me" CTAs. */
+  whatsappUrl: string;
   /** Main technology stack rendered as chips in the author card. */
   mainTechStack: string[];
 }
@@ -26,5 +28,6 @@ export const personalInfo: PersonalInfo = {
   phone: "+20 100 785 2868",
   linkedinUrl: "https://www.linkedin.com/in/mahmoud-shahieen-frontend",
   githubUrl: "https://github.com/mahmoudshahieen4-ux",
+  whatsappUrl: "https://wa.me/201007852868",
   mainTechStack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "ASP.NET Core"],
 };

@@ -114,8 +114,11 @@ export default function Nav() {
 
         <div className="flex items-center gap-2">
           <a
-            href={`mailto:${personalInfo.email}`}
+            href={personalInfo.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
             className="btn-shine hidden rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgba(139,92,246,0.9)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
+            aria-label="Chat with me on WhatsApp"
           >
             Hire Me
           </a>
@@ -166,9 +169,12 @@ export default function Nav() {
               ))}
               <li>
                 <a
-                  href={`mailto:${personalInfo.email}`}
+                  href={personalInfo.whatsappUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
                   className="mt-1 block rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-3 text-center text-sm font-semibold text-white"
+                  aria-label="Chat: Hire me on WhatsApp"
                 >
                   Hire Me
                 </a>

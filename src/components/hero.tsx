@@ -123,8 +123,11 @@ export default function Hero() {
             Download Resume
           </Link>
           <a
-            href="#contact"
-            className="rounded-full border border-white/15 px-7 py-3 text-sm font-bold text-zinc-200 transition-colors hover:border-violet-400/60 hover:text-white"
+            href={personalInfo.whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Contact me on WhatsApp"
+            className="rounded-full border border-white/15 px-7 py-3 text-sm font-bold text-zinc-200 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
           >
             Contact Me
           </a>
