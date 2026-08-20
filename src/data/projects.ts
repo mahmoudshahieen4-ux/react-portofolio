@@ -65,7 +65,7 @@ export const projects: Project[] = [
     title: "Honey Haven Landing Page",
     description:
       "A landing page for a local honey brand with a product showcase, about section and contact options.",
-    image: "/images/projects/goldenShop.png",
+    image: "/images/projects/bee.png",
     demoUrl: "https://bee-landing-page.vercel.app/",
     githubUrl: "https://github.com/mahmoudshahieen4-ux",
     techStack: ["React", "Tailwind"],

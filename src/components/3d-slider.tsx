@@ -28,9 +28,23 @@ export default function ThreeDSlider({
   const count = items.length;
   const angleStep = useMemo(() => (count > 0 ? 360 / count : 0), [count]);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [rotationIndex, setRotationIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(autoPlay);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  // Active card is the wrapped ("visible") index derived from the monotonic
+  // rotation index. rotationIndex never resets, so the ring keeps spinning
+  // forward forever — the card after the last is the first (infinite loop).
+  const activeIndex = count > 0 ? ((rotationIndex % count) + count) % count : 0;
+
+  // 0 (front-facing card) .. 1 (furthest card, flipped at the back of the ring).
+  // Drives a per-card dim so the ring reads as a deep, true 3D carousel — the
+  // cards wrapping around the back are visible, smaller and darkened.
+  const depthOf = (index: number): number => {
+    if (count < 2) return 0;
+    const slot = ((index - rotationIndex) % count + count) % count;
+    return Math.min(slot, count - slot) / (count / 2);
+  };
 
   const sectionRef = useRef<HTMLElement>(null);
   const dragStartX = useRef<number | null>(null);
@@ -49,16 +63,26 @@ export default function ThreeDSlider({
   useEffect(() => {
     if (prefersReducedMotion || !isPlaying || count < 2) return;
     const id = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % count);
+      setRotationIndex((r) => r + 1);
     }, autoPlayInterval);
     return () => window.clearInterval(id);
   }, [autoPlayInterval, count, isPlaying, prefersReducedMotion]);
 
+  // Jump to a card, rotating to the *nearest* equivalent ring position so the
+  // ring spins the minimal direction instead of swinging the whole way around.
   const goTo = useCallback(
     (index: number) => {
-      setActiveIndex(((index % count) + count) % count);
+      if (count < 2) {
+        setRotationIndex(0);
+        return;
+      }
+      const forward = ((index - rotationIndex) % count + count) % count;
+      const back = forward - count;
+      // Prefer the shorter spin; tie-break forward.
+      const step = Math.abs(forward) <= Math.abs(back) ? forward : back;
+      setRotationIndex((r) => r + step);
     },
-    [count],
+    [count, rotationIndex],
   );
 
   const pause = useCallback(() => setIsPlaying(false), []);
@@ -79,10 +103,10 @@ export default function ThreeDSlider({
     if (event.target !== sectionRef.current) return;
     if (event.key === "ArrowRight") {
       event.preventDefault();
-      setActiveIndex((prev) => (prev + 1) % count);
+      setRotationIndex((r) => r + 1);
     } else if (event.key === "ArrowLeft") {
       event.preventDefault();
-      setActiveIndex((prev) => (prev - 1 + count) % count);
+      setRotationIndex((r) => r - 1);
     } else if (event.key === " " || event.key === "Enter") {
       event.preventDefault();
       togglePlay();
@@ -101,9 +125,7 @@ export default function ThreeDSlider({
     const delta = event.clientX - dragStartX.current;
     dragStartX.current = null;
     if (Math.abs(delta) < 40) return;
-    setActiveIndex((prev) =>
-      delta < 0 ? (prev + 1) % count : (prev - 1 + count) % count,
-    );
+    setRotationIndex((r) => (delta < 0 ? r + 1 : r - 1));
   };
 
   if (count === 0) {
@@ -144,7 +166,7 @@ export default function ThreeDSlider({
           style={
             {
               "--quantity": count,
-              transform: `perspective(1000px) rotateX(-16deg) rotateY(${-activeIndex * angleStep}deg)`,
+              transform: `perspective(1000px) rotateX(-20deg) rotateY(${-rotationIndex * angleStep}deg)`,
             } as React.CSSProperties
           }
         >
@@ -154,8 +176,13 @@ export default function ThreeDSlider({
               className={styles.item}
               style={{ "--position": index + 1 } as React.CSSProperties}
             >
-              <div className={styles.card}>
-                <div className={styles.cardInner}>
+              <div
+                className={styles.card}
+                style={{
+                  filter: `brightness(${(0.25 + (1 - depthOf(index)) * 0.75).toFixed(2)})`,
+                }}
+              >
+                  <div className={styles.cardInner}>
                   {/* Whole thumbnail links to the live demo (new tab). */}
                   <Link
                     href={project.demoUrl}
@@ -273,7 +300,7 @@ export default function ThreeDSlider({
           <button
             type="button"
             className={styles.arrowBtn}
-            onClick={() => setActiveIndex((prev) => (prev - 1 + count) % count)}
+            onClick={() => setRotationIndex((r) => r - 1)}
             aria-label="Previous project"
             disabled={count < 2}
           >
@@ -309,7 +336,7 @@ export default function ThreeDSlider({
           <button
             type="button"
             className={styles.arrowBtn}
-            onClick={() => setActiveIndex((prev) => (prev + 1) % count)}
+            onClick={() => setRotationIndex((r) => r + 1)}
             aria-label="Next project"
             disabled={count < 2}
           >
