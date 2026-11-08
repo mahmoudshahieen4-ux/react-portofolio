@@ -75,7 +75,7 @@ export const projects: Project[] = [
     title: "Hyper market",
     description:
       "a desktop react app full inventory system with sales analytics and warning notifications and sales operations .",
-    image: "/images/projects/bee.png",
+    image: "/images/projects/hyper-market.png",
     demoUrl: "https://inventory-managment-system-navy.vercel.app/",
     githubUrl: "https://github.com/mahmoudshahieen4-ux",
     techStack: ["React", "tauri"],
