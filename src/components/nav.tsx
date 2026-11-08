@@ -67,7 +67,7 @@ export default function Nav() {
       <nav
         className={`mx-auto flex max-w-5xl items-center justify-between gap-4 rounded-2xl px-4 py-3 transition-all duration-300 sm:px-6 ${
           scrolled
-            ? "glass shadow-[0_12px_40px_-12px_rgba(139,92,246,0.35)]"
+            ? "nav-glass shadow-[0_12px_40px_-12px_var(--primary-glow)]"
             : "border border-transparent"
         }`}
         aria-label="Primary"
@@ -85,8 +85,8 @@ export default function Nav() {
             className="h-11 w-11 rounded-full object-cover"
             priority
           />
-          <span className="text-sm font-black tracking-tight text-white">
-            Mahmoud<span className="text-violet-400">.dev</span>
+          <span className="text-sm font-black tracking-tight text-text">
+            Mahmoud<span className="text-primary">.dev</span>
           </span>
         </Link>
 
@@ -100,8 +100,8 @@ export default function Nav() {
                   href={hrefFor(link.id)}
                   className={`relative rounded-full px-4 py-2 text-sm font-medium transition-colors ${
                     isActive
-                      ? "bg-violet-500/20 text-violet-200"
-                      : "text-zinc-300 hover:bg-white/5 hover:text-white"
+                      ? "bg-primary/20 text-primary"
+                      : "text-muted hover:bg-text/5 hover:text-text"
                   }`}
                   aria-current={isActive ? "true" : undefined}
                 >
@@ -117,7 +117,7 @@ export default function Nav() {
             href={personalInfo.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn-shine hidden rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-5 py-2 text-sm font-semibold text-white shadow-[0_10px_30px_-10px_rgba(139,92,246,0.9)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
+            className="btn-shine hidden rounded-full bg-gradient-to-r from-primary to-accent px-5 py-2 text-sm font-semibold text-primary-contrast shadow-[0_10px_30px_-10px_var(--primary-glow)] transition-transform hover:-translate-y-0.5 sm:inline-flex"
             aria-label="Chat with me on WhatsApp"
           >
             Hire Me
@@ -129,7 +129,7 @@ export default function Nav() {
             onClick={() => setIsOpen((open) => !open)}
             aria-label={isOpen ? "Close menu" : "Open menu"}
             aria-expanded={isOpen}
-            className="glass flex h-10 w-10 items-center justify-center rounded-xl text-white md:hidden"
+            className="glass flex h-10 w-10 items-center justify-center rounded-xl text-text md:hidden"
           >
             <svg
               width="18"
@@ -154,14 +154,14 @@ export default function Nav() {
       {/* Mobile menu */}
       {isOpen && (
         <div className="mx-auto mt-2 max-w-5xl px-4 md:hidden">
-          <div className="glass rounded-2xl p-3">
+          <div className="nav-glass rounded-2xl p-3">
             <ul className="flex flex-col gap-1">
               {NAV_LINKS.map((link) => (
                 <li key={link.id}>
                   <a
                     href={hrefFor(link.id)}
                     onClick={() => setIsOpen(false)}
-                    className="block rounded-xl px-4 py-3 text-sm font-medium text-zinc-200 hover:bg-white/5 hover:text-white"
+                    className="block rounded-xl px-4 py-3 text-sm font-medium text-text/85 hover:bg-text/5 hover:text-text"
                   >
                     {link.label}
                   </a>
@@ -173,7 +173,7 @@ export default function Nav() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => setIsOpen(false)}
-                  className="mt-1 block rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 px-4 py-3 text-center text-sm font-semibold text-white"
+                  className="mt-1 block rounded-xl bg-gradient-to-r from-primary to-accent px-4 py-3 text-center text-sm font-semibold text-primary-contrast"
                   aria-label="Chat: Hire me on WhatsApp"
                 >
                   Hire Me

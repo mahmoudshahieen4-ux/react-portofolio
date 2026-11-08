@@ -4,8 +4,8 @@ import dynamic from "next/dynamic";
 // hero paints immediately and the showcase loads only when needed.
 const ThreeDSlider = dynamic(() => import("@/src/components/3d-slider"), {
   loading: () => (
-    <div className="flex min-h-screen py-5 items-center justify-center bg-[#0b0b16]">
-      <p className="text-sm text-zinc-500">Loading 3D showcase…</p>
+    <div className="flex min-h-screen py-5 items-center justify-center bg-surface">
+      <p className="text-sm text-muted">Loading 3D showcase…</p>
     </div>
   ),
 });

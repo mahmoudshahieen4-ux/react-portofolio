@@ -1,13 +1,94 @@
 @import "tailwindcss";
 
+/* ---- Theme tokens -------------------------------------------------------
+   Every color in the site resolves from these variables. A theme only swaps
+   the six raw tokens below; everything else is derived with color-mix().
+   Keep --primary in sync with THEMES[].color in src/lib/themes.ts. */
+:root,
+:root[data-theme="blue"] {
+  color-scheme: dark;
+
+  --primary: #4f46e5;
+  --primary-contrast: #ffffff;
+  --accent: #3b82f6;
+  --bg: #050914;
+  --surface: #0b1224;
+  --surface-2: #111a33;
+  --text: #eef2ff;
+}
+
+:root[data-theme="purple"] {
+  --primary: #8b5cf6;
+  --primary-contrast: #ffffff;
+  --accent: #d946ef;
+  --bg: #0a0616;
+  --surface: #150e26;
+  --surface-2: #1d1433;
+  --text: #f5efff;
+}
+
+:root[data-theme="green"] {
+  --primary: #10b981;
+  --primary-contrast: #032019;
+  --accent: #34d399;
+  --bg: #03100c;
+  --surface: #071a14;
+  --surface-2: #0b241b;
+  --text: #e9fdf4;
+}
+
+:root[data-theme="orange"] {
+  --primary: #f97316;
+  --primary-contrast: #1f0c01;
+  --accent: #fbbf24;
+  --bg: #140a04;
+  --surface: #1f1208;
+  --surface-2: #2a190b;
+  --text: #fff4e8;
+}
+
+:root[data-theme="pink"] {
+  --primary: #ec4899;
+  --primary-contrast: #ffffff;
+  --accent: #f472b6;
+  --bg: #14060e;
+  --surface: #1f0b17;
+  --surface-2: #2a0f20;
+  --text: #fff0f7;
+}
+
+/* Derived tokens — never hardcode colors in components. */
 :root {
-  --background: #07070f;
-  --foreground: #f4f4f8;
+  --background: var(--bg);
+  --foreground: var(--text);
+  --muted: color-mix(in srgb, var(--text) 62%, var(--bg));
+  --muted-strong: color-mix(in srgb, var(--text) 78%, var(--bg));
+  --line: color-mix(in srgb, var(--text) 14%, transparent);
+  --line-strong: color-mix(in srgb, var(--text) 24%, transparent);
+  --glass-bg: color-mix(in srgb, var(--text) 6%, transparent);
+  --glass-border: color-mix(in srgb, var(--text) 13%, transparent);
+  --surface-glass: color-mix(in srgb, var(--surface) 74%, transparent);
+  --primary-soft: color-mix(in srgb, var(--primary) 16%, transparent);
+  --primary-line: color-mix(in srgb, var(--primary) 45%, transparent);
+  --primary-deep: color-mix(in srgb, var(--primary) 55%, var(--bg));
+  --primary-glow: color-mix(in srgb, var(--primary) 45%, transparent);
+  --accent-soft: color-mix(in srgb, var(--accent) 55%, var(--text));
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-primary: var(--primary);
+  --color-primary-deep: var(--primary-deep);
+  --color-primary-contrast: var(--primary-contrast);
+  --color-accent: var(--accent);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -18,37 +99,53 @@ html {
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background: var(--bg);
+  color: var(--text);
   font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
   overflow-x: hidden;
 }
 ::selection {
-  background: rgba(139, 92, 246, 0.45);
-  color: #fff;
+  background: color-mix(in srgb, var(--primary) 55%, transparent);
+  color: var(--text);
 }
 
 ::-webkit-scrollbar {
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #0b0b16;
+  background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, #7c3aed, #4c1d95);
+  background: linear-gradient(180deg, var(--primary), var(--primary-deep));
   border-radius: 999px;
 }
 
 /* ---- Reusable utilities ---- */
 .glass {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
 }
 
+/* Opaque enough that page content scrolling underneath never bleeds through
+   the fixed header (the plain .glass surface is meant for cards on a still
+   background). */
+.nav-glass {
+  background: color-mix(in srgb, var(--bg) 96%, transparent);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(18px) saturate(140%);
+  -webkit-backdrop-filter: blur(18px) saturate(140%);
+}
+
 .text-gradient {
-  background: linear-gradient(90deg, #c4b5fd, #a78bfa 35%, #818cf8 65%, #c4b5fd);
+  background: linear-gradient(
+    90deg,
+    var(--accent-soft),
+    var(--accent) 35%,
+    var(--primary) 65%,
+    var(--accent-soft)
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -268,6 +365,46 @@ body {
   .anim-wheel {
     animation: none;
   }
+  .theme-ripple {
+    transition: none;
+  }
+}
+
+/* ---- Theme switch reveal ------------------------------------------------
+   Fallback ripple (browsers without View Transitions). The provider sizes
+   and colours the element inline, then toggles the state classes. */
+.theme-ripple {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 9998;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%) scale(0);
+  opacity: 1;
+  transition:
+    transform 700ms cubic-bezier(0.65, 0, 0.35, 1),
+    opacity 180ms ease-out;
+  will-change: transform, opacity;
+}
+.theme-ripple.is-active {
+  transform: translate(-50%, -50%) scale(1);
+}
+.theme-ripple.is-fading {
+  opacity: 0;
+}
+
+/* View Transitions path: the provider animates the new snapshot's clip-path. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+::view-transition-new(root) {
+  z-index: 2;
 }
 
 /* ---- Print (resume page) ---- */

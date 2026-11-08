@@ -16,10 +16,53 @@ interface ParticleFieldProps {
   density?: number;
 }
 
+interface Rgb {
+  r: number;
+  g: number;
+  b: number;
+}
+
+interface Palette {
+  dot: Rgb;
+  link: Rgb;
+  pointer: Rgb;
+}
+
+const FALLBACK: Rgb = { r: 79, g: 70, b: 229 };
+
+/** Reads a #rgb / #rrggbb custom property as RGB channels. */
+function readRgb(value: string): Rgb {
+  const hex = value.trim().replace("#", "");
+  const full =
+    hex.length === 3
+      ? hex
+          .split("")
+          .map((char) => char + char)
+          .join("")
+      : hex;
+  if (!/^[0-9a-f]{6}$/i.test(full)) return FALLBACK;
+  const int = Number.parseInt(full, 16);
+  return { r: (int >> 16) & 255, g: (int >> 8) & 255, b: int & 255 };
+}
+
+function rgba(color: Rgb, alpha: number): string {
+  return `rgba(${color.r}, ${color.g}, ${color.b}, ${alpha})`;
+}
+
+function readPalette(): Palette {
+  const styles = getComputedStyle(document.documentElement);
+  return {
+    dot: readRgb(styles.getPropertyValue("--accent")),
+    link: readRgb(styles.getPropertyValue("--primary")),
+    pointer: readRgb(styles.getPropertyValue("--accent")),
+  };
+}
+
 /**
  * Lightweight interactive particle field rendered on a full-size canvas.
  * Particles drift and connect with nearby particles; the pointer draws
- * connecting lines to them. Respects `prefers-reduced-motion` (static frame).
+ * connecting lines to them. Respects `prefers-reduced-motion` (static frame)
+ * and re-reads the theme colors whenever `data-theme` changes.
  */
 export default function ParticleField({
   className = "",
@@ -37,6 +80,7 @@ export default function ParticleField({
     let width = 0;
     let height = 0;
     let particles: Particle[] = [];
+    let palette = readPalette();
     const mouse = { x: -9999, y: -9999 };
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -78,7 +122,7 @@ export default function ParticleField({
 
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(167, 139, 250, 0.55)";
+        ctx.fillStyle = rgba(palette.dot, 0.55);
         ctx.fill();
       }
 
@@ -90,7 +134,10 @@ export default function ParticleField({
           ctx.beginPath();
           ctx.moveTo(a.x, a.y);
           ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = `rgba(139, 92, 246, ${(1 - dist / linkDistance) * 0.28})`;
+          ctx.strokeStyle = rgba(
+            palette.link,
+            (1 - dist / linkDistance) * 0.28,
+          );
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -107,7 +154,10 @@ export default function ParticleField({
           ctx.beginPath();
           ctx.moveTo(particles[i].x, particles[i].y);
           ctx.lineTo(mouse.x, mouse.y);
-          ctx.strokeStyle = `rgba(196, 181, 253, ${(1 - dist / mouseDistance) * 0.4})`;
+          ctx.strokeStyle = rgba(
+            palette.pointer,
+            (1 - dist / mouseDistance) * 0.4,
+          );
           ctx.lineWidth = 1;
           ctx.stroke();
         }
@@ -135,6 +185,15 @@ export default function ParticleField({
     window.addEventListener("pointermove", handlePointerMove);
     document.addEventListener("pointerleave", handlePointerLeave);
 
+    const themeObserver = new MutationObserver(() => {
+      palette = readPalette();
+      if (reducedMotion) draw();
+    });
+    themeObserver.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ["data-theme"],
+    });
+
     if (reducedMotion) {
       draw();
     } else {
@@ -143,6 +202,7 @@ export default function ParticleField({
 
     return () => {
       cancelAnimationFrame(rafId);
+      themeObserver.disconnect();
       window.removeEventListener("resize", resize);
       window.removeEventListener("pointermove", handlePointerMove);
       document.removeEventListener("pointerleave", handlePointerLeave);

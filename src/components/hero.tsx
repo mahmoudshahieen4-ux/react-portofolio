@@ -39,7 +39,7 @@ export default function Hero() {
   return (
     <section
       id="home"
-      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#07070f] text-white"
+      className="relative flex min-h-screen items-center justify-center overflow-hidden bg-bg text-text"
       aria-label="Introduction"
     >
       {/* Interactive particle background */}
@@ -50,9 +50,9 @@ export default function Hero() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 overflow-hidden"
       >
-        <div className="animate-blob absolute -left-24 top-10 h-80 w-80 rounded-full bg-violet-600/25 blur-3xl" />
-        <div className="animate-blob absolute right-0 top-1/3 h-96 w-96 rounded-full bg-indigo-600/20 blur-3xl [animation-delay:3s]" />
-        <div className="animate-blob absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-fuchsia-600/15 blur-3xl [animation-delay:6s]" />
+        <div className="animate-blob absolute -left-24 top-10 h-80 w-80 rounded-full bg-primary/25 blur-3xl" />
+        <div className="animate-blob absolute right-0 top-1/3 h-96 w-96 rounded-full bg-accent/20 blur-3xl [animation-delay:3s]" />
+        <div className="animate-blob absolute bottom-0 left-1/3 h-72 w-72 rounded-full bg-primary/15 blur-3xl [animation-delay:6s]" />
       </div>
 
       {/* Floating skill badges (desktop) */}
@@ -63,7 +63,7 @@ export default function Hero() {
         {FLOATING_BADGES.map((badge) => (
           <span
             key={badge.label}
-            className={`animate-float glass absolute rounded-full px-4 py-2 text-sm font-semibold text-violet-100 ${badge.className}`}
+            className={`animate-float glass absolute rounded-full px-4 py-2 text-sm font-semibold text-text/90 ${badge.className}`}
             style={{ animationDelay: badge.delay }}
           >
             {badge.label}
@@ -74,7 +74,7 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 mx-auto max-w-4xl px-6 pb-28 pt-32 text-center">
         <p
-          className="anim-fade-up text-sm font-medium uppercase tracking-[0.35em] text-violet-300/90"
+          className="anim-fade-up text-sm font-medium uppercase tracking-[0.35em] text-accent/90"
           style={{ animationDelay: "0.05s" }}
         >
           Hello, I&apos;m
@@ -97,7 +97,7 @@ export default function Hero() {
         </p>
 
         <p
-          className="anim-fade-up mx-auto mt-6 max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg"
+          className="anim-fade-up mx-auto mt-6 max-w-2xl text-base leading-relaxed text-muted sm:text-lg"
           style={{ animationDelay: "0.35s" }}
         >
           I craft fast, accessible and delightful web experiences — from
@@ -112,13 +112,13 @@ export default function Hero() {
         >
           <a
             href="#projects"
-            className="btn-shine rounded-full bg-gradient-to-r from-violet-600 to-indigo-600 px-7 py-3 text-sm font-bold text-white shadow-[0_14px_40px_-12px_rgba(139,92,246,0.95)] transition-transform hover:-translate-y-0.5"
+            className="btn-shine rounded-full bg-gradient-to-r from-primary to-accent px-7 py-3 text-sm font-bold text-primary-contrast shadow-[0_14px_40px_-12px_var(--primary-glow)] transition-transform hover:-translate-y-0.5"
           >
             View Projects
           </a>
           <Link
             href="/resume"
-            className="glass rounded-full px-7 py-3 text-sm font-bold text-white transition-transform hover:-translate-y-0.5"
+            className="glass rounded-full px-7 py-3 text-sm font-bold text-text transition-transform hover:-translate-y-0.5"
           >
             Download Resume
           </Link>
@@ -127,7 +127,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="Contact me on WhatsApp"
-            className="rounded-full border border-white/15 px-7 py-3 text-sm font-bold text-zinc-200 transition-colors hover:border-emerald-400/60 hover:text-emerald-300"
+            className="rounded-full border border-line px-7 py-3 text-sm font-bold text-text/85 transition-colors hover:border-accent/60 hover:text-accent"
           >
             Contact Me
           </a>
@@ -136,7 +136,7 @@ export default function Hero() {
             target="_blank"
             rel="noopener noreferrer"
             aria-label="GitHub profile"
-            className="glass flex h-11 w-11 items-center justify-center rounded-full text-white transition-transform hover:-translate-y-0.5"
+            className="glass flex h-11 w-11 items-center justify-center rounded-full text-text transition-transform hover:-translate-y-0.5"
           >
             <svg
               width="18"
@@ -152,7 +152,7 @@ export default function Hero() {
 
         {/* Availability pill */}
         <div
-          className="anim-fade-up mt-10 flex items-center justify-center gap-2 text-sm text-zinc-400"
+          className="anim-fade-up mt-10 flex items-center justify-center gap-2 text-sm text-muted"
           style={{ animationDelay: "0.55s" }}
         >
           <span className="relative flex h-2.5 w-2.5">
@@ -169,8 +169,8 @@ export default function Hero() {
         aria-label="Scroll to projects"
         className="absolute bottom-8 left-1/2 z-10 -translate-x-1/2"
       >
-        <span className="flex h-12 w-7 items-start justify-center rounded-full border-2 border-white/25 p-2">
-          <span className="anim-wheel h-2.5 w-1 rounded-full bg-violet-300" />
+        <span className="flex h-12 w-7 items-start justify-center rounded-full border-2 border-line-strong p-2">
+          <span className="anim-wheel h-2.5 w-1 rounded-full bg-accent" />
         </span>
       </a>
     </section>

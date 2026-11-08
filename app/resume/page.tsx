@@ -9,7 +9,7 @@ import { skills } from "@/src/data/skills";
 export const metadata: Metadata = {
   title: "Resume",
   description:
-    "Resume of Mahmoud Issa — Front-End Developer. Print or save as PDF.",
+    "Resume of Mahmoud Shahieen — Front-End Developer. Print or save as PDF.",
 };
 
 const CONTACTS = [
@@ -22,12 +22,12 @@ const CONTACTS = [
 
 export default function ResumePage() {
   return (
-    <main className="min-h-screen bg-[#07070f] py-20 print:py-0">
+    <main className="min-h-screen bg-bg pb-20 pt-32 print:py-0">
       <div className="mx-auto max-w-3xl px-6">
-        <div className="mb-8 flex items-center justify-between print-hide">
+        <div className="mb-8 flex flex-col items-stretch gap-3 print-hide sm:flex-row sm:items-center sm:justify-between">
           <Link
             href="/"
-            className="rounded-full border border-white/15 px-4 py-2 text-sm text-zinc-300 transition-colors hover:border-violet-400/60 hover:text-white"
+            className="rounded-full border border-line px-4 py-2 text-center text-sm text-muted transition-colors hover:border-primary/60 hover:text-text sm:text-left"
           >
             ← Back to portfolio
           </Link>
@@ -39,7 +39,7 @@ export default function ResumePage() {
             <h1 className="text-3xl font-black tracking-tight sm:text-4xl">
               {personalInfo.name}
             </h1>
-            <p className="mt-1 text-base font-semibold text-violet-700">
+            <p className="mt-1 text-base font-semibold text-primary-deep">
               {personalInfo.headline}
             </p>
             <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-slate-600">
@@ -66,7 +66,7 @@ export default function ResumePage() {
               {skills.map((skill) => (
                 <li
                   key={skill.name}
-                  className="rounded-full bg-violet-50 px-3 py-1 text-xs font-semibold text-violet-800"
+                  className="rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary-deep"
                 >
                   {skill.name}
                 </li>
@@ -80,7 +80,7 @@ export default function ResumePage() {
             </h2>
             <ul className="mt-3 space-y-4">
               {projects.map((project) => (
-                <li key={project.id} className="border-l-2 border-violet-300 pl-4">
+                <li key={project.id} className="border-l-2 border-primary/40 pl-4">
                   <h3 className="text-sm font-bold">{project.title}</h3>
                   <p className="mt-1 text-xs leading-relaxed text-slate-600">
                     {project.description}
