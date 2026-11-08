@@ -111,8 +111,8 @@
   position: absolute;
   inset: 0;
   /* Initial ring placement. The rAF loop rewrites --delta per card while the
-     ring rotates; `mod` keeps it in (-180deg, 180deg] so the yaw clamp below
-     turns both neighbours toward the viewer instead of past it. */
+     ring rotates; each card keeps its full yaw so the whole ring stays visible,
+     faces pointing away from the ring centre. */
   --angle: calc((var(--position) - 1) * (360 / var(--quantity)) * 1deg);
   --delta: calc(mod(var(--angle) + 180deg, 360deg) - 180deg);
   transform: translate3d(
@@ -120,9 +120,9 @@
       0,
       calc(cos(var(--delta)) * var(--radius))
     )
-    rotateY(clamp(-44deg, var(--delta), 44deg));
+    rotateY(var(--delta));
   transform-style: preserve-3d;
-  will-change: transform, opacity;
+  will-change: transform;
 }
 
 .card {
@@ -134,10 +134,6 @@
   background-color: var(--surface-2);
   box-shadow: 0 24px 50px -18px rgba(0, 0, 0, 0.75);
   transform-style: preserve-3d;
-  /* Cards on the far half of the ring face away from the viewer — hide their
-     mirrored back faces instead of showing reversed artwork. */
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   transition: border-color 320ms ease, box-shadow 320ms ease;
 }
 

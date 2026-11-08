@@ -25,8 +25,7 @@ interface ThreeDSliderProps {
 
 const DEGREES_PER_DRAG_CARD = 180;
 const EASE_TIME_CONSTANT_MS = 110;
-const HIDE_CARD_AFTER = 94;
-const FADE_CARD_AFTER = 82;
+const MAX_SHADE = 0.75;
 
 type Mode = "auto" | "ease" | "paused";
 
@@ -81,18 +80,11 @@ export default function ThreeDSlider({
       const distance = Math.abs(delta);
 
       item.style.setProperty("--delta", `${delta.toFixed(2)}deg`);
-      const opacity =
-        distance >= HIDE_CARD_AFTER
-          ? 0
-          : distance > FADE_CARD_AFTER
-            ? (HIDE_CARD_AFTER - distance) / (HIDE_CARD_AFTER - FADE_CARD_AFTER)
-            : 1;
-      item.style.opacity = opacity.toFixed(2);
-      item.style.pointerEvents = opacity < 0.5 ? "none" : "";
 
+      // Dim the cards wrapping around the back, like the original ring.
       const shade = shadeRefs.current[index];
       if (shade) {
-        shade.style.opacity = Math.min(0.55, distance / 150).toFixed(3);
+        shade.style.opacity = ((distance / 180) * MAX_SHADE).toFixed(3);
       }
     }
 
@@ -343,13 +335,6 @@ export default function ThreeDSlider({
           {items.map((project, index) => {
             const facing = (((index * angleStep) % 360) + 360) % 360;
             const distance = Math.min(facing, 360 - facing);
-            const initialOpacity =
-              distance >= HIDE_CARD_AFTER
-                ? 0
-                : distance > FADE_CARD_AFTER
-                  ? (HIDE_CARD_AFTER - distance) /
-                    (HIDE_CARD_AFTER - FADE_CARD_AFTER)
-                  : 1;
             return (
               <article
                 key={project.id}
@@ -357,13 +342,7 @@ export default function ThreeDSlider({
                 ref={(node) => {
                   itemRefs.current[index] = node;
                 }}
-                style={
-                  {
-                    "--position": index + 1,
-                    opacity: initialOpacity,
-                    pointerEvents: initialOpacity < 0.5 ? "none" : undefined,
-                  } as React.CSSProperties
-                }
+                style={{ "--position": index + 1 } as React.CSSProperties}
               >
                 <div className={styles.card}>
                   <div className={styles.cardInner}>
@@ -392,7 +371,9 @@ export default function ThreeDSlider({
                       ref={(node) => {
                         shadeRefs.current[index] = node;
                       }}
-                      style={{ opacity: Math.min(0.55, distance / 150).toFixed(3) }}
+                      style={{
+                        opacity: ((distance / 180) * MAX_SHADE).toFixed(3),
+                      }}
                     />
 
                     <div className={styles.overlay}>
