@@ -20,9 +20,11 @@
   position: relative;
   width: 100%;
   /* Fit the whole scene (title, ring, author, controls) under the fixed nav.
-     `scroll-padding-top` is 96px, so subtract it from the viewport height. */
-  min-height: calc(100vh - 96px);
-  min-height: calc(100svh - 96px);
+     `scroll-padding-top` is 96px, so subtract it from the viewport height.
+     The extra 3vh keeps the cards wrapping around the back of the ring clear
+     of the fixed header instead of being clipped mid-rotation. */
+  min-height: calc(103vh - 96px);
+  min-height: calc(103svh - 96px);
   overflow: hidden;
   touch-action: pan-y;
   background-color: var(--bg);
@@ -42,8 +44,8 @@
 .banner {
   position: relative;
   width: 100%;
-  height: calc(100vh - 96px);
-  height: calc(100svh - 96px);
+  height: calc(103vh - 96px);
+  height: calc(103svh - 96px);
   text-align: center;
   overflow: hidden;
 }
@@ -98,7 +100,7 @@
   position: absolute;
   width: var(--card-w);
   height: var(--card-h);
-  top: 7%;
+  top: 15%;
   left: 50%;
   margin-left: calc(var(--card-w) / -2);
   /* The ring plane is tilted once here; each card is placed on it below. */
@@ -391,6 +393,46 @@
   box-shadow: 0 24px 48px -24px rgba(0, 0, 0, 0.6);
 }
 
+.identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+}
+
+.identityText {
+  min-width: 0;
+}
+
+.avatar,
+.avatarFallback {
+  flex: 0 0 auto;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid color-mix(in srgb, var(--primary) 60%, transparent);
+  box-shadow:
+    0 0 0 4px color-mix(in srgb, var(--primary) 14%, transparent),
+    0 12px 26px -12px var(--primary-glow);
+  background-color: var(--surface-2);
+}
+
+.avatarFallback {
+  display: grid;
+  place-items: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  color: var(--text);
+  background-image: radial-gradient(
+    circle at 30% 25%,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    transparent 65%
+  );
+  background-color: color-mix(in srgb, var(--primary) 22%, var(--surface));
+}
+
 .eyebrow {
   margin: 0 0 2px;
   font-size: 0.75rem;
@@ -606,6 +648,20 @@
     max-width: 100%;
     padding: 16px 18px;
     text-align: center;
+  }
+
+  .identity {
+    justify-content: center;
+  }
+
+  .avatar,
+  .avatarFallback {
+    width: 56px;
+    height: 56px;
+  }
+
+  .avatarFallback {
+    font-size: 1rem;
   }
 
   .title {

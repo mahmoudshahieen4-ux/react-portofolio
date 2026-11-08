@@ -27,6 +27,13 @@ const DEGREES_PER_DRAG_CARD = 180;
 const EASE_TIME_CONSTANT_MS = 110;
 const MAX_SHADE = 0.75;
 
+const initials = personalInfo.name
+  .split(/\s+/)
+  .map((part) => part[0])
+  .join("")
+  .slice(0, 2)
+  .toUpperCase();
+
 type Mode = "auto" | "ease" | "paused";
 
 export default function ThreeDSlider({
@@ -418,9 +425,26 @@ export default function ThreeDSlider({
         {/* Personal info / hero author block. */}
         <div className={styles.content}>
           <div className={styles.author}>
-            <p className={styles.eyebrow}>Hello, I am</p>
-            <h2 className={styles.name}>{personalInfo.name}</h2>
-            <p className={styles.role}>{personalInfo.headline}</p>
+            <div className={styles.identity}>
+              {personalInfo.avatarUrl ? (
+                <Image
+                  src={personalInfo.avatarUrl}
+                  alt={`Portrait of ${personalInfo.name}`}
+                  width={128}
+                  height={128}
+                  className={styles.avatar}
+                />
+              ) : (
+                <span className={styles.avatarFallback} aria-hidden="true">
+                  {initials}
+                </span>
+              )}
+              <div className={styles.identityText}>
+                <p className={styles.eyebrow}>Hello, I am</p>
+                <h2 className={styles.name}>{personalInfo.name}</h2>
+                <p className={styles.role}>{personalInfo.headline}</p>
+              </div>
+            </div>
             <ul className={styles.stackList} aria-label="Main technology stack">
               {personalInfo.mainTechStack.map((tech) => (
                 <li key={tech} className={styles.stackChip}>

@@ -17,6 +17,12 @@ export interface PersonalInfo {
   whatsappUrl: string;
   /** Main technology stack rendered as chips in the author card. */
   mainTechStack: string[];
+  /**
+   * Portrait for the round avatar next to the name. Drop a square photo at
+   * `public/images/profile.jpg` and set this to `"/images/profile.jpg"`.
+   * When empty, the card shows the initials instead.
+   */
+  avatarUrl?: string;
 }
 
 export const personalInfo: PersonalInfo = {
