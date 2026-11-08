@@ -32,8 +32,15 @@ export const personalInfo: PersonalInfo = {
   location: "Cairo, Egypt",
   email: "mahmoudshahieen4@gmail.com",
   phone: "+20 100 785 2868",
-  linkedinUrl: "https://www.linkedin.com/in/mahmoud-shahieen-frontend",
+  linkedinUrl: "https://www.linkedin.com/in/mahmoud-shahieen-dev",
   githubUrl: "https://github.com/mahmoudshahieen4-ux",
   whatsappUrl: "https://wa.me/201007852868",
-  mainTechStack: ["React", "Next.js", "TypeScript", "Tailwind CSS", "ASP.NET Core"],
+  mainTechStack: [
+    "React",
+    "Next.js",
+    "TypeScript",
+    "Tailwind CSS",
+    "Node js",
+    "postgres"
+  ],
 };

@@ -70,6 +70,16 @@ export const projects: Project[] = [
     githubUrl: "https://github.com/mahmoudshahieen4-ux",
     techStack: ["React", "Tailwind"],
   },
+  {
+    id: "Hyper market",
+    title: "Hyper market",
+    description:
+      "a desktop react app full inventory system with sales analytics and warning notifications and sales operations .",
+    image: "/images/projects/bee.png",
+    demoUrl: "https://inventory-managment-system-navy.vercel.app/",
+    githubUrl: "https://github.com/mahmoudshahieen4-ux",
+    techStack: ["React", "tauri"],
+  },
 ];
 
 /** Returns a copy of the project registry (handy for filtering/sorting later). */
